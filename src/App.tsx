@@ -16,14 +16,18 @@ const App = () => {
         setFinallySum(Math.ceil((sum) * 100) / 100)
     }, [currentPrice, enterValue])
 
+    useEffect(() => {
+        calcSum()
+    }, [calcSum]);
+
 
     useEffect(() => {
         const socket = new WebSocket("wss://fstream.binance.com/ws/ethusdt@bookTicker")
+        calcSum()
         socket.onmessage = event => {
             !mode ?  setCurrentPrice(JSON.parse(event.data).a) : setCurrentPrice(JSON.parse(event.data).b)
         }
-        calcSum()
-    },[calcSum,mode])
+    },[mode])
 
     return (
         <main className="wrapper">
