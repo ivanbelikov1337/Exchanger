@@ -1,0 +1,74 @@
+.wrapper {
+    font-size: 1.2rem;
+}
+
+.box {
+    height: 5rem;
+    width: 16rem;
+    display: grid;
+    padding: 1rem;
+    border: 2px solid #757373;
+    border-radius: 1rem;
+    justify-content: start;
+}
+
+.form {
+    display: grid;
+    gap: 2rem;
+}
+
+.label {
+    height: 1rem;
+    font-size: 1.2rem;
+}
+
+.input {
+    outline: none;
+    font-size: 1.2rem;
+    display: flex;
+    border: 1px solid silver;
+    padding-right: 1rem;
+    border-radius: 2rem;
+    height: 2rem;
+}
+
+.selector {
+    display: flex;
+    gap: 2rem;
+}
+
+.switch-btn {
+    display: inline-block;
+    width: 4.5rem;
+    height: 2.37rem;
+    border-radius: 1.2rem;
+    background: #bfbfbf;
+    z-index: 0;
+    margin: 0;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    transition-duration: 300ms;
+}
+
+.switch-btn::after {
+    content: "";
+    height: 2rem;
+    width: 2rem;
+    border-radius: 1.1rem;
+    background: #fff;
+    top: 0.2rem;
+    left: 0.2rem;
+    transition-duration: 300ms;
+    position: absolute;
+    z-index: 1;
+}
+
+.switch-on::after {
+    left: 2.3rem;
+}
+.currentPrice   {
+    font-size: 1.2rem;
+    text-align: center;
+}
