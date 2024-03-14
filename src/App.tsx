@@ -5,21 +5,9 @@ type Themes = "switch-on" |  null
 
 const App = () => {
     const [mode, setMode] = useState<Themes>(null)
-    const [finallySum, setFinallySum] = useState<number>(0)
     const [enterValue, setEnterValue] = useState<number>(0)
     const [currentPrice, setCurrentPrice] = useState<number>(0)
     const toggle = () => setMode((prev) => (prev === "switch-on" ? null : "switch-on"))
-
-    const calcSum = useCallback(() => {
-        let sum = 0;
-        sum = enterValue * +currentPrice
-        setFinallySum(Math.ceil((sum) * 100) / 100)
-    }, [currentPrice, enterValue])
-
-    useEffect(() => {
-        calcSum()
-    }, [calcSum]);
-
 
     useEffect(() => {
         const socket = new WebSocket("wss://fstream.binance.com/ws/ethusdt@bookTicker")
@@ -27,7 +15,12 @@ const App = () => {
         socket.onmessage = event => {
             !mode ?  setCurrentPrice(JSON.parse(event.data).a) : setCurrentPrice(JSON.parse(event.data).b)
         }
-    },[mode])
+        return () => socket.close()
+    },[])
+
+    const calcSum = useCallback(() => {
+        return currentPrice * enterValue
+    }, [currentPrice, mode,enterValue])
 
     return (
         <main className="wrapper">
@@ -50,8 +43,8 @@ const App = () => {
                     <div className="box">
                         <p className="label">
                             {!mode ?
-                                <span>You will receive: {finallySum} $</span> :
-                                <span>Must give: {finallySum} $</span>}
+                                <span>You will receive: {calcSum()} $</span> :
+                                <span>Must give: {calcSum()} $</span>}
                         </p>
                     </div>
                 </form>
